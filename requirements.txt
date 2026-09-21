@@ -1,0 +1,4 @@
+azure-identity
+agent-framework-foundry
+agent-framework-foundry-hosting
+agent-framework-devui
