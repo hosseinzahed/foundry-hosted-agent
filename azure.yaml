@@ -1,0 +1,52 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/Azure/azure-dev/main/schemas/v1.0/azure.yaml.json
+
+name: researcher-agent
+services:
+    ai-project:
+        host: azure.ai.project
+        endpoint: ${FOUNDRY_PROJECT_ENDPOINT}
+    researcher-agent:
+        project: src/researcher-agent
+        host: azure.ai.agent
+        language: python
+        uses:
+            - ai-project
+        env:
+            # Resolved from the azd environment at deploy time. `.env` is excluded
+            # by .agentignore, so it is never available inside the container.
+            # FOUNDRY_PROJECT_ENDPOINT is intentionally absent: the platform
+            # injects it, and declaring it here would shadow the managed value.
+            AZURE_AI_MODEL_DEPLOYMENT_NAME: ${AZURE_AI_MODEL_DEPLOYMENT_NAME}
+            # Resolved by Foundry at sandbox start from the project connection
+            # `web-iq-mcp` (category CustomKeys, key name `key`). The secret is
+            # never stored in azure.yaml, the azd environment, or the image.
+            # Note the `$$` - azd runs its own envsubst pass over this map and
+            # fails on a bare `${{...}}` ("unable to parse variable name").
+            # `$$` escapes to a single `$`, so Foundry receives the placeholder
+            # `${{connections.web-iq-mcp.credentials.key}}` and resolves it at
+            # sandbox start.
+            WEB_IQ_API_KEY: $${{connections.web-iq-mcp.credentials.key}}
+        codeConfiguration:
+            dependencyResolution: remote_build
+            entryPoint: main.py
+            runtime: python_3_13
+        container:
+            resources:
+                cpu: "0.5"
+                memory: 1Gi
+        description: |
+            A researcher agent that leverages the Agent Framework and Web IQ.
+        kind: hosted
+        metadata:
+            tags:
+                - Agent Framework
+                - AI Agent Hosting
+                - Azure AI AgentServer
+                - Responses Protocol
+                - Streaming
+        name: researcher-agent
+        protocols:
+            - protocol: responses
+              version: 2.0.0
+infra:
+    provider: microsoft.foundry
