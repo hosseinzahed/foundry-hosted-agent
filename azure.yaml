@@ -50,16 +50,19 @@ services:
               version: 2.0.0
         # Endpoint-level configuration, applied with `azd ai agent endpoint update`
         # (or on deploy) rather than living on an agent version.
-        # `activity` is what Microsoft 365 Copilot and Teams talk to; the portal
-        # publish flow adds it, and declaring it here keeps it from being lost.
+        #
+        # `protocols` is deliberately NOT declared here. The live endpoint serves
+        # both `activity` (what Microsoft 365 Copilot and Teams talk to, added by
+        # the publish flow) and `responses`, and fields omitted from this block are
+        # preserved by `endpoint update`. Declaring `activity` would make
+        # `azd ai agent run` classify this as an activity agent and launch the
+        # Microsoft 365 Agents Playground instead of the local Agent Inspector UI.
+        #
         # BotServiceTenant grants access via the tenant admin's publish approval.
         # Republishing from the portal resets this to BotServiceRbac, which forces
         # every end user to hold Azure RBAC on the Foundry project and triggers a
         # "sign in to Foundry" prompt that never completes for users without it.
         agentEndpoint:
-            protocols:
-                - activity
-                - responses
             authorizationSchemes:
                 - type: Entra
                 - type: BotServiceTenant
