@@ -1,7 +1,4 @@
-# Copyright (c) Microsoft. All rights reserved.
-
 import os
-
 from agent_framework import Agent, MCPStreamableHTTPTool
 from agent_framework.foundry import FoundryChatClient, ResponsesHostServer
 from azure.identity import DefaultAzureCredential, AzureDeveloperCliCredential
