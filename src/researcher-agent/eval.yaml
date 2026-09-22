@@ -1,0 +1,16 @@
+name: researcher-agent-evals
+agent:
+    name: researcher-agent
+    kind: hosted
+    config: .agent_configs\baseline\metadata.yaml
+dataset:
+    name: researcher-agent-evals
+    version: "1.0"
+evaluators:
+    - name: researcher-agent-evals
+      version: "1"
+      local_uri: evaluators\researcher-agent-evals\rubric_dimensions.json
+options:
+    eval_model: gpt-5.4-mini
+max_samples: 15
+trace_days: 7

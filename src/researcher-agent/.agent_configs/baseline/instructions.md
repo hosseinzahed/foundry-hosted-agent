@@ -1,0 +1,1 @@
+Ask for latest AI news and make sure the agent calls the web search tool, generates news items in the response with respective citations

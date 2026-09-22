@@ -1,0 +1,38 @@
+[
+  {
+    "id": "live_search_tool_use",
+    "description": "The agent makes a live external search or news tool call before answering, and the query is aligned to current AI news rather than relying on memory.",
+    "weight": 10
+  },
+  {
+    "id": "current_ai_news_relevance",
+    "description": "The response focuses on current AI-related news items or developments and does not drift into generic AI background, opinions, or unrelated topics.",
+    "weight": 5
+  },
+  {
+    "id": "multiple_distinct_items",
+    "description": "The answer presents several distinct AI news items or headlines rather than a single item or a non-itemized summary.",
+    "weight": 4
+  },
+  {
+    "id": "item_level_citation_mapping",
+    "description": "Each news item is paired with a clearly associated citation or source link that supports that specific headline or claim, rather than relying only on a generic sources footer.",
+    "weight": 6
+  },
+  {
+    "id": "source_grounding_accuracy",
+    "description": "The reported news items are faithful to the retrieved source material, without unsupported details, fabricated claims, or obvious mismatches between the source and the statement.",
+    "weight": 6
+  },
+  {
+    "id": "concise_roundup_format",
+    "description": "The response is brief and list-like, with little or no unnecessary preamble, rambling analysis, or excessive verbosity.",
+    "weight": 3
+  },
+  {
+    "id": "general_quality",
+    "description": "Other important quality factors not covered by listed criteria.",
+    "weight": 5,
+    "always_applicable": true
+  }
+]
